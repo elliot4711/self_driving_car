@@ -15,14 +15,14 @@ const int leftBackward  = 2;  // Pin  2 of L293
 void setup(){
   Serial.begin(9600);
  
-    //Set pins as outputs
-    pinMode(rightForward, OUTPUT);
-    pinMode(rightBackward, OUTPUT);
-    pinMode(leftForward, OUTPUT);
-    pinMode(leftBackward, OUTPUT);
+  //Set pins as outputs
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
 
-    pinMode(TRIG_PIN, OUTPUT);
-    pinMode(ECHO_PIN, INPUT);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
     
    
   
