@@ -5,22 +5,27 @@ const unsigned int ECHO_PIN = 12;
 const unsigned int BAUD_RATE = 9600;
 //L293D
 //Motor A
-const int motorPin1  = 5;  // Pin 14 of L293
-const int motorPin2  = 6;  // Pin 10 of L293
+const int rightForward  = 5;  // Pin 14 of L293
+const int rightBackward = 4;  // Pin 10 of L293
 //Motor B
-const int motorPin3  = 10; // Pin  7 of L293
-const int motorPin4  = 9;  // Pin  2 of L293
+const int leftForward  = 3; // Pin  7 of L293
+const int leftBackward  = 2;  // Pin  2 of L293
 
-void setup()
-{
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+//This will run only one time.
+void setup(){
+  Serial.begin(9600);
+ 
+    //Set pins as outputs
+    pinMode(rightForward, OUTPUT);
+    pinMode(rightBackward, OUTPUT);
+    pinMode(leftForward, OUTPUT);
+    pinMode(leftBackward, OUTPUT);
+
+    pinMode(TRIG_PIN, OUTPUT);
+    pinMode(ECHO_PIN, INPUT);
+    
+   
   
-  pinMode(motorPin1, OUTPUT);
-  pinMode(motorPin2, OUTPUT);
-  pinMode(motorPin3, OUTPUT);
-  pinMode(motorPin4, OUTPUT);
-  Serial.begin(BAUD_RATE);
 }
 
 void loop()
@@ -42,21 +47,21 @@ void loop()
     if (distance >= 50)
     {
       Serial.println("Got to start motor");
-      digitalWrite(motorPin1, HIGH);
-      digitalWrite(motorPin2, LOW);
+      digitalWrite(rightForward, HIGH);
+      digitalWrite(leftForward, HIGH);
       
-      digitalWrite(motorPin3, LOW);
-      digitalWrite(motorPin4, LOW);
+      digitalWrite(rightBackward, LOW);
+      digitalWrite(leftBackward, LOW);
 
       delay(2000); 
     }
     else
     {
       Serial.println("Got to end motor");
-      digitalWrite(motorPin1, LOW);
-      digitalWrite(motorPin2, LOW);
-      digitalWrite(motorPin3, LOW);
-      digitalWrite(motorPin4, LOW);
+      digitalWrite(rightForward, LOW);
+      digitalWrite(rightBackward, LOW);
+      digitalWrite(leftForward, LOW);
+      digitalWrite(leftBackward, LOW);
       delay(2000);
     }
   Serial.print("distance to nearest object:");
