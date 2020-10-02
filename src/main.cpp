@@ -1,73 +1,58 @@
+// #include <NewPing.h>
+// #include <Arduino.h>
+// #include <Servo.h>
+// //L293D
+// //Motor A
+// const int motorPin1  = 3;  // Pin 14 of L293
+// const int motorPin2  = 2;  // Pin 10 of L293
+// //Motor B
+// const int motorPin3  = 5; // Pin  7 of L293
+// const int motorPin4  = 4;  // Pin  2 of L293
 
-#include <Arduino.h>
-const unsigned int TRIG_PIN = 13;
-const unsigned int ECHO_PIN = 12;
-const unsigned int BAUD_RATE = 9600;
-//L293D
-//Motor A
-const int rightForward  = 5;  // Pin 14 of L293
-const int rightBackward = 4;  // Pin 10 of L293
-//Motor B
-const int leftForward  = 3; // Pin  7 of L293
-const int leftBackward  = 2;  // Pin  2 of L293
-
-//This will run only one time.
-void setup(){
-  Serial.begin(9600);
+// //This will run only one time.
+// void setup(){
  
-  //Set pins as outputs
-  pinMode(rightForward, OUTPUT);
-  pinMode(rightBackward, OUTPUT);
-  pinMode(leftForward, OUTPUT);
-  pinMode(leftBackward, OUTPUT);
-
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+//     //Set pins as outputs
+//     pinMode(motorPin1, OUTPUT);
+//     pinMode(motorPin2, OUTPUT);
+//     pinMode(motorPin3, OUTPUT);
+//     pinMode(motorPin4, OUTPUT);
     
-   
+//     //Motor Control - Motor A: motorPin1,motorpin2 & Motor B: motorpin3,motorpin4
+
+//     //This code  will turn Motor A clockwise for 2 sec.
+//     digitalWrite(motorPin1, HIGH);
+//     digitalWrite(motorPin2, LOW);
+//     digitalWrite(motorPin3, LOW);
+//     digitalWrite(motorPin4, LOW);
+//     delay(2000); 
+//     //This code will turn Motor A counter-clockwise for 2 sec.
+//     digitalWrite(motorPin1, LOW);
+//     digitalWrite(motorPin2, HIGH);
+//     digitalWrite(motorPin3, LOW);
+//     digitalWrite(motorPin4, LOW);
+//     delay(2000);
+    
+//     //This code will turn Motor B clockwise for 2 sec.
+//     digitalWrite(motorPin1, LOW);
+//     digitalWrite(motorPin2, LOW);
+//     digitalWrite(motorPin3, HIGH);
+//     digitalWrite(motorPin4, LOW);
+//     delay(2000); 
+//     //This code will turn Motor B counter-clockwise for 2 sec.
+//     digitalWrite(motorPin1, LOW);
+//     digitalWrite(motorPin2, LOW);
+//     digitalWrite(motorPin3, LOW);
+//     digitalWrite(motorPin4, HIGH);
+//     delay(2000);    
+    
+//     //And this code will stop motors
+//     digitalWrite(motorPin1, LOW);
+//     digitalWrite(motorPin2, LOW);
+//     digitalWrite(motorPin3, LOW);
+//     digitalWrite(motorPin4, LOW);
   
-}
+// }
 
-void loop()
-{
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
 
-  const unsigned long duration = pulseIn(ECHO_PIN, HIGH);
-  int distance = duration / 29.1 / 2;
-  if (duration == 0)
-  {
-    Serial.println("Warning: no pulse from sensor");
-  }
-  else
-  {
-    if (distance >= 50)
-    {
-      Serial.println("Got to start motor");
-      digitalWrite(rightForward, HIGH);
-      digitalWrite(leftForward, HIGH);
-      
-      digitalWrite(rightBackward, LOW);
-      digitalWrite(leftBackward, LOW);
-
-      delay(2000); 
-    }
-    else
-    {
-      Serial.println("Got to end motor");
-      digitalWrite(rightForward, LOW);
-      digitalWrite(rightBackward, LOW);
-      digitalWrite(leftForward, LOW);
-      digitalWrite(leftBackward, LOW);
-      delay(2000);
-    }
-  Serial.print("distance to nearest object:");
-  Serial.println(distance);
-  Serial.println(" cm");
-    
-  }
-  delay(100);
-}
+// void loop(){}
