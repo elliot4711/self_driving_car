@@ -49,7 +49,7 @@ void setup(){
   distance = readPing();
   delay(100);
   myservo.write(90);
-  delay(1000);
+  delay(4000);
    
   
 }
@@ -72,7 +72,7 @@ void loop()
       digitalWrite(rightBackward, LOW);
       digitalWrite(leftBackward, LOW);
 
-      delay(250); 
+      delay(100); 
     }
     else
     {
@@ -87,7 +87,7 @@ void loop()
       myservo.write(160);
       delay(1000);
       myservo.write(90);
-      delay(250);
+      delay(100);
     }
     Serial.print("distance to nearest object:");
     Serial.println(distance);
