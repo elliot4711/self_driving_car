@@ -3,8 +3,8 @@
 #include <Servo.h> //Servo motor library, standard but may need to be installed
 
 //Ultrasonic sensor pins
-const unsigned int TRIG_PIN = 13;
-const unsigned int ECHO_PIN = 12;
+#define TRIG_PIN 13
+#define ECHO_PIN 12
 
 //Communication baud rate
 const unsigned int BAUD_RATE = 9600;
@@ -16,7 +16,7 @@ const int leftForward  = 3;
 const int leftBackward  = 2;  
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
-int maximum_distance = 200;
+#define maximum_distance 200
 
 //Bolean to check if car is moving forward
 boolean goesForward = false;
@@ -39,7 +39,7 @@ int readPing(){
 
 //Function to look right and return distance sensor value
 int lookRight(){ 
-  myservo.write(10);
+  myservo.write(30);
   delay(500);
   int distance = readPing();
   delay(100);
@@ -49,7 +49,7 @@ int lookRight(){
 
 //Function to look left and return distance sensor value
 int lookLeft(){
-  myservo.write(170);
+  myservo.write(150);
   delay(500);
   int distance = readPing();
   delay(100);
@@ -98,7 +98,7 @@ void turnRight(){
   digitalWrite(leftBackward, LOW);
   digitalWrite(rightForward, LOW);
 
-  delay(500);
+  delay(1000);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -115,7 +115,7 @@ void turnLeft(){
   digitalWrite(leftForward, LOW);
   digitalWrite(rightBackward, LOW);
 
-  delay(500);
+  delay(1000);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -149,49 +149,39 @@ void setup(){
   distance = readPing();
   delay(100);
   delay(4000);
+  Serial.println("Setup done");
    
   
 }
 
-void loop()
-{
-  distance = readPing();
-  if (distance == 0)
-  {
-    Serial.println("Warning: no pulse from sensor");
-  }
-  else
-  {
-    if (distance >= 50)
-    {
-      Serial.println("Got to start motor");
-      digitalWrite(rightForward, HIGH);
-      digitalWrite(leftForward, HIGH);
-      
-      digitalWrite(rightBackward, LOW);
-      digitalWrite(leftBackward, LOW);
+void loop(){
 
-      delay(100); 
+  int distanceRight = 0;
+  int distanceLeft = 0;
+  delay(50);
+  if (distance <= 50){
+    moveStop();
+    delay(300);
+    moveBackward();
+    delay(400);
+    moveStop();
+    delay(300);
+    distanceRight = lookRight();
+    delay(300);
+    distanceLeft = lookLeft();
+    delay(300);
+
+    if (distanceRight >= distanceLeft){
+      turnRight();
+      moveStop();
     }
-    else
-    {
-      Serial.println("Got to end motor");
-      digitalWrite(rightForward, LOW);
-      digitalWrite(rightBackward, LOW);
-      digitalWrite(leftForward, LOW);
-      digitalWrite(leftBackward, LOW);
-      delay(500);
-      myservo.write(20);
-      delay(1000);
-      myservo.write(160);
-      delay(1000);
-      myservo.write(90);
-      delay(100);
+    else{
+      turnLeft();
+      moveStop();
     }
-    Serial.print("distance to nearest object:");
-    Serial.println(distance);
-    Serial.println(" cm");
-    
   }
-  delay(100);
+  else{
+    moveForward(); 
+  }
+    distance = readPing();
 }
