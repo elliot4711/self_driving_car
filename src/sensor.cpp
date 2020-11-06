@@ -32,7 +32,7 @@ int readPing(){
   delay(70);
   int cm = sonar.ping_cm();
   if (cm==0){
-    cm=250;
+    cm=200;
   }
   return cm;
 }
@@ -159,17 +159,17 @@ void loop(){
   int distanceRight = 0;
   int distanceLeft = 0;
   delay(50);
-  if (distance <= 50){
+  if (distance <= 70){
     moveStop();
     delay(300);
     moveBackward();
     delay(400);
     moveStop();
-    delay(300);
+    delay(500);
     distanceRight = lookRight();
-    delay(300);
+    delay(500);
     distanceLeft = lookLeft();
-    delay(300);
+    delay(500);
 
     if (distanceRight >= distanceLeft){
       turnRight();
