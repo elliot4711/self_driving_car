@@ -17,6 +17,7 @@ const int leftBackward  = 2;
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
 #define maximum_distance 200
+#define stop_distance 70
 
 //Bolean to check if car is moving forward
 boolean goesForward = false;
@@ -159,7 +160,7 @@ void loop(){
   int distanceRight = 0;
   int distanceLeft = 0;
   delay(50);
-  if (distance <= 70){
+  if (distance <= stop_distance){
     moveStop();
     delay(300);
     moveBackward();
