@@ -14,6 +14,8 @@ const int rightForward  = 5;
 const int rightBackward = 4;  
 const int leftForward  = 3; 
 const int leftBackward  = 2;  
+const int rightBlink = 10;
+const int leftBlink = 8;
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
 #define maximum_distance 200
@@ -93,6 +95,18 @@ void moveBackward(){
 
 //Function to turn right
 void turnRight(){
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+  delay(400);
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+  delay(400);
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightBackward, HIGH);
 
@@ -110,6 +124,18 @@ void turnRight(){
 
 //Function to turn left
 void turnLeft(){
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+  delay(400);
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+  delay(400);
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+
   digitalWrite(leftBackward, HIGH);
   digitalWrite(rightForward, HIGH);
   
@@ -135,6 +161,8 @@ void setup(){
   pinMode(rightBackward, OUTPUT);
   pinMode(leftForward, OUTPUT);
   pinMode(leftBackward, OUTPUT);
+  pinMode(rightBlink, OUTPUT);
+  pinMode(leftBlink, OUTPUT);
 
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
