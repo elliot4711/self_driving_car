@@ -14,8 +14,8 @@ const int rightForward  = 5;
 const int rightBackward = 4;  
 const int leftForward  = 3; 
 const int leftBackward  = 2;  
-const int rightBlink = 10;
-const int leftBlink = 8;
+const int rightBlink = 8;
+const int leftBlink = 10;
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
 #define maximum_distance 200
