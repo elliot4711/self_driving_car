@@ -1,58 +1,216 @@
-// #include <NewPing.h>
-// #include <Arduino.h>
-// #include <Servo.h>
-// //L293D
-// //Motor A
-// const int motorPin1  = 3;  // Pin 14 of L293
-// const int motorPin2  = 2;  // Pin 10 of L293
-// //Motor B
-// const int motorPin3  = 5; // Pin  7 of L293
-// const int motorPin4  = 4;  // Pin  2 of L293
+#include <NewPing.h> //Function library for ultrasonic sensor, must be installed
+#include <Arduino.h>
+#include <Servo.h> //Servo motor library, standard but may need to be installed
 
-// //This will run only one time.
-// void setup(){
- 
-//     //Set pins as outputs
-//     pinMode(motorPin1, OUTPUT);
-//     pinMode(motorPin2, OUTPUT);
-//     pinMode(motorPin3, OUTPUT);
-//     pinMode(motorPin4, OUTPUT);
-    
-//     //Motor Control - Motor A: motorPin1,motorpin2 & Motor B: motorpin3,motorpin4
+//Ultrasonic sensor pins
+#define TRIG_PIN 13
+#define ECHO_PIN 12
 
-//     //This code  will turn Motor A clockwise for 2 sec.
-//     digitalWrite(motorPin1, HIGH);
-//     digitalWrite(motorPin2, LOW);
-//     digitalWrite(motorPin3, LOW);
-//     digitalWrite(motorPin4, LOW);
-//     delay(2000); 
-//     //This code will turn Motor A counter-clockwise for 2 sec.
-//     digitalWrite(motorPin1, LOW);
-//     digitalWrite(motorPin2, HIGH);
-//     digitalWrite(motorPin3, LOW);
-//     digitalWrite(motorPin4, LOW);
-//     delay(2000);
-    
-//     //This code will turn Motor B clockwise for 2 sec.
-//     digitalWrite(motorPin1, LOW);
-//     digitalWrite(motorPin2, LOW);
-//     digitalWrite(motorPin3, HIGH);
-//     digitalWrite(motorPin4, LOW);
-//     delay(2000); 
-//     //This code will turn Motor B counter-clockwise for 2 sec.
-//     digitalWrite(motorPin1, LOW);
-//     digitalWrite(motorPin2, LOW);
-//     digitalWrite(motorPin3, LOW);
-//     digitalWrite(motorPin4, HIGH);
-//     delay(2000);    
-    
-//     //And this code will stop motors
-//     digitalWrite(motorPin1, LOW);
-//     digitalWrite(motorPin2, LOW);
-//     digitalWrite(motorPin3, LOW);
-//     digitalWrite(motorPin4, LOW);
+//Communication baud rate
+const unsigned int BAUD_RATE = 9600;
+
+//L293D control pins
+const int rightForward  = 5;  
+const int rightBackward = 4;  
+const int leftForward  = 3; 
+const int leftBackward  = 2;  
+const int rightBlink = 8;
+const int leftBlink = 10;
+
+//Maximum distance, over this the sensor does not need to measure exact and will return 0
+#define maximum_distance 200
+#define stop_distance 40
+
+//Bolean to check if car is moving forward
+boolean goesForward = false;
+
+//Distance variable for storing sensor distance measurment
+int distance = 100;
+
+NewPing sonar(TRIG_PIN, ECHO_PIN, maximum_distance); //sensor function using NewPing library
+
+Servo myservo; //servo name
+
+int readPing(){
+  delay(70);
+  int cm = sonar.ping_cm();
+  if (cm==0){
+    cm=200;
+  }
+  return cm;
+}
+
+//Function to look right and return distance sensor value
+int lookRight(){ 
+  myservo.write(30);
+  delay(500);
+  int distance = readPing();
+  delay(100);
+  myservo.write(90);
+  return distance;
+}
+
+//Function to look left and return distance sensor value
+int lookLeft(){
+  myservo.write(150);
+  delay(500);
+  int distance = readPing();
+  delay(100);
+  myservo.write(90);
+  return distance;
+  delay(100);
+}
+
+//Function to stop all motors
+void moveStop(){
+  digitalWrite(rightForward, LOW);
+  digitalWrite(leftForward, LOW);
+  digitalWrite(rightBackward, LOW);
+  digitalWrite(leftBackward, LOW);
+}
+
+//Function to move forward
+void moveForward(){
+  if(!goesForward){
+    goesForward = true;
+
+    digitalWrite(leftForward, HIGH);
+    digitalWrite(rightForward, HIGH);
+
+    digitalWrite(leftBackward, LOW);
+    digitalWrite(rightBackward, LOW);
+  }
+}
+
+//Function to move backwards
+void moveBackward(){
+  goesForward = false;
+
+  digitalWrite(leftBackward, HIGH);
+  digitalWrite(rightBackward, HIGH);
+
+  digitalWrite(leftForward, LOW);
+  digitalWrite(rightForward, LOW);
+}
+
+//Function to turn right
+void turnRight(){
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+  delay(400);
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+  delay(400);
+  digitalWrite(rightBlink, HIGH);
+  delay(400);
+  digitalWrite(rightBlink, LOW);
+
+  digitalWrite(leftForward, HIGH);
+  digitalWrite(rightBackward, HIGH);
+
+  digitalWrite(leftBackward, LOW);
+  digitalWrite(rightForward, LOW);
+
+  delay(1000);
+
+  digitalWrite(leftForward, HIGH);
+  digitalWrite(rightForward, HIGH);
+
+  digitalWrite(leftBackward, LOW);
+  digitalWrite(rightBackward, LOW);
+}
+
+//Function to turn left
+void turnLeft(){
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+  delay(400);
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+  delay(400);
+  digitalWrite(leftBlink, HIGH);
+  delay(400);
+  digitalWrite(leftBlink, LOW);
+
+  digitalWrite(leftBackward, HIGH);
+  digitalWrite(rightForward, HIGH);
   
-// }
+  digitalWrite(leftForward, LOW);
+  digitalWrite(rightBackward, LOW);
 
+  delay(1000);
 
-// void loop(){}
+  digitalWrite(leftForward, HIGH);
+  digitalWrite(rightForward, HIGH);
+
+  digitalWrite(leftBackward, LOW);
+  digitalWrite(rightBackward, LOW);
+}
+
+//This will run only one time.
+void setup(){
+  Serial.begin(9600);
+  myservo.attach(11);
+ 
+  //Set pins as outputs
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
+  pinMode(rightBlink, OUTPUT);
+  pinMode(leftBlink, OUTPUT);
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  
+  myservo.write(90);
+  delay(2000);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  delay(4000);
+  Serial.println("Setup done");
+   
+  
+}
+
+void loop(){
+
+  int distanceRight = 0;
+  int distanceLeft = 0;
+  delay(50);
+  if (distance <= stop_distance){
+    moveStop();
+    delay(300);
+    moveBackward();
+    delay(400);
+    moveStop();
+    delay(500);
+    distanceRight = lookRight();
+    delay(500);
+    distanceLeft = lookLeft();
+    delay(500);
+
+    if (distanceRight >= distanceLeft){
+      turnRight();
+      moveStop();
+    }
+    else{
+      turnLeft();
+      moveStop();
+    }
+  }
+  else{
+    moveForward(); 
+  }
+    distance = readPing();
+}
