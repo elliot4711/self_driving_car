@@ -1,7 +1,7 @@
 # self_driving_car
 # Arduino self driving car using HY-SRF05 Ultrasonic Distance Sensor Module
 
-![Arduino self driving car](https://imgur.com/a/0WVToaV)
+![Arduino self driving car](C:\Users\Elliot\self_driving_car\Self_driving_car.jpg)
 
 
 ## This project uses the arduino servo library (Servo.h) to control the servo and the newping library (NewPing.h) to control and improve the accuracy of the distance sensor measurments. ***Note that the NewPing library has to be installed by the user, it is not a standard arduino library.***
