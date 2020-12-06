@@ -12,13 +12,23 @@
 <br />
 Finished car with all parts mounted
 <br />
-<img src="Self_driving_car.jpg" title="Finished car" alt="Finished car" width="300" height="400" />
+<img src="Self_driving_car.jpg" title="Finished car" alt="Finished car" width="300" />
 
 <br /> The car works by using the ultrasonic distance sensor to track the distance to the nearest object directly in front of the car. If the distance to the nearest object is over 200cm it will register as exactly 200cm, it will not track higher distances. Once the distance drops below the number defined in the code by the "stop_distance" macro the car will stop.
 
 It will then turn the servo to record the distance to the nearest object on it's right and left side. It will save these distances as distanceRight and distanceLeft and will then choose to turn in the direction that is the furthest away from any obstacles. It turns by first driving backwards to clear any wall or obstacle and then spinning the wheels in opposite directions. Once it has turned it will continue driving forward until it encounters an obstacle. 
 
-Note: As of now the 9V battery drains very fast and will after some time not always output a steady enough current, and the car will then seize to work and will need to be restarted. At this point you need to change the battery, even if it is not completely empty. The sensor will also sometimes not be able to detect small or thin objects such as chair legs. 
+<br />
+Wiring example for this design:
+<br />
+<img src="Wiring example.png" title="Finished car" alt="Finished car" width="800" />
+
+<br />
+<br />Wiring schematic for this design:
+<br />
+<img src="Wiring schematic.png" title="Finished car" alt="Finished car" width="800" />
+
+<br />The wiring schematic and example are rather hard to read, this is due to the fact that I could not find a good program to make wiring diagrams for more complex designs, and I apologize for this inconvenience. Note that as of now the 9V battery drains very fast and will after some time not always output a steady enough current, and the car will then seize to work and will need to be restarted. At this point you need to change the battery, even if it is not completely empty. The sensor will also sometimes not be able to detect small or thin objects such as chair legs. 
 
 
 
