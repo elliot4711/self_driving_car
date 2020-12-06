@@ -4,6 +4,7 @@
 ## This project uses the arduino servo library (Servo.h) to control the servo and the newping library (NewPing.h) to control and improve the accuracy of the distance sensor measurments. ***Note that the NewPing library has to be installed by the user, it is not a standard arduino library.***
 
 ##  <br /> For this project you will need an arduino uno, an L293D motor driver, an HY-SRF05 Ultrasonic Distance Sensor Module, a 5g small servo, two DAGU DG01D 48:1 dc geared motors, two battery holders for 3 batteries each, 6 1.2V rechargeable batteries totalling 7.2V for the motors and one 9V E battery to power the arduino as well as wires for the connections. The project also uses 3D-printed parts both for the base mounting plate for the parts and for the wheels and servo mount. These parts are available via the links below:
+<br />
 
 * [Base plate and castor wheel](https://www.thingiverse.com/thing:4674544) made by me for use only under [Creative Commons Non-Commercial license](https://creativecommons.org/licenses/by-nc/4.0/)
 * [HC-SR05 sensor servo mount](https://www.thingiverse.com/thing:4674535) made by me for use only under [Creative Commons Non-Commercial license](https://creativecommons.org/licenses/by-nc/4.0/)
