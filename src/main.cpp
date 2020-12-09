@@ -154,6 +154,11 @@ void setup(){
 
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
+
+  pinMode(leftLed, OUTPUT);
+  pinMode(rightLed, OUTPUT);
+
+
   
   myservo.write(90);
   delay(2000);
