@@ -202,7 +202,7 @@ void loop()
     distanceLeft = lookLeft();
     delay(300);
 
-    if (distance >= distanceLeft){
+    if (distanceRight >= distanceLeft){
       turnRight();
       moveStop();
     }
