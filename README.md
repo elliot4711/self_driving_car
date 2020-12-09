@@ -15,7 +15,7 @@ Finished car with all parts mounted
 <br />
 <img src="Self_driving_car.jpg" title="Finished car" alt="Finished car" width="300" />
 
-<br /> The car works by using the ultrasonic distance sensor to track the distance to the nearest object directly in front of the car. If the distance to the nearest object is over 200cm it will register as exactly 200cm, it will not track higher distances. Once the distance drops below the number defined in the code by the "stop_distance" macro the car will stop.
+<br /> The car works by using the ultrasonic distance sensor to track the distance to the nearest object directly in front of the car. If the distance to the nearest object is over 200cm it will register as exactly 200cm, it will not track higher distances. Once the distance drops below the number defined in the code by the "stop_distance" value the car will stop.
 
 It will then turn the servo to record the distance to the nearest object on it's right and left side. It will save these distances as distanceRight and distanceLeft and will then choose to turn in the direction that is the furthest away from any obstacles. It turns by first driving backwards to clear any wall or obstacle and then spinning the wheels in opposite directions. Once it has turned it will continue driving forward until it encounters an obstacle. 
 

@@ -16,11 +16,14 @@ const int leftForward  = 3;
 const int leftBackward  = 2;  
 
 //LED control pins
-const int rightLed = 10;
-const int leftLed = 8;
+const int rightLed = 8;
+const int leftLed = 10;
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
 int maximum_distance = 200;
+
+//Change this to change the distance from walls the car stops at
+int stop_distance = 50;
 
 //Bolean to check if car is moving forward
 boolean goesForward = false;
@@ -33,7 +36,7 @@ NewPing sonar(TRIG_PIN, ECHO_PIN, maximum_distance); //sensor function using New
 Servo myservo; //servo name
 
 int readPing(){
-  delay(70);
+  delay(15);
   int cm = sonar.ping_cm();
   if (cm==0){
     cm=250;
@@ -108,7 +111,7 @@ void turnRight(){
   digitalWrite(leftBackward, LOW);
   digitalWrite(rightForward, LOW);
 
-  delay(500);
+  delay(1000);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -132,7 +135,7 @@ void turnLeft(){
   digitalWrite(leftForward, LOW);
   digitalWrite(rightBackward, LOW);
 
-  delay(500);
+  delay(1000);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -186,7 +189,7 @@ void loop()
   int distanceLeft = 0;
   delay(50);
 
-  if (distance <= 20){
+  if (distance <= stop_distance){
     moveStop();
     delay(300);
 
@@ -219,7 +222,7 @@ void loop()
   distance = 0;
   for (int i = 0; i <= 2; i++) {
     distance += readPing();
-    delay(30);
+    delay(5);
   }
   distance = distance / 3;
   
