@@ -3,8 +3,8 @@
 #include <Servo.h> //Servo motor library, standard but may need to be installed
 
 //Ultrasonic sensor pins
-#define TRIG_PIN 13
-#define ECHO_PIN 12
+const unsigned int TRIG_PIN = 13;
+const unsigned int ECHO_PIN = 12;
 
 //Communication baud rate
 const unsigned int BAUD_RATE = 9600;
@@ -14,12 +14,13 @@ const int rightForward  = 5;
 const int rightBackward = 4;  
 const int leftForward  = 3; 
 const int leftBackward  = 2;  
-const int rightBlink = 8;
-const int leftBlink = 10;
+
+//LED control pins
+const int rightLed = 10;
+const int leftLed = 8;
 
 //Maximum distance, over this the sensor does not need to measure exact and will return 0
-#define maximum_distance 200
-#define stop_distance 40
+int maximum_distance = 200;
 
 //Bolean to check if car is moving forward
 boolean goesForward = false;
@@ -35,14 +36,14 @@ int readPing(){
   delay(70);
   int cm = sonar.ping_cm();
   if (cm==0){
-    cm=200;
+    cm=250;
   }
   return cm;
 }
 
 //Function to look right and return distance sensor value
 int lookRight(){ 
-  myservo.write(30);
+  myservo.write(10);
   delay(500);
   int distance = readPing();
   delay(100);
@@ -52,7 +53,7 @@ int lookRight(){
 
 //Function to look left and return distance sensor value
 int lookLeft(){
-  myservo.write(150);
+  myservo.write(170);
   delay(500);
   int distance = readPing();
   delay(100);
@@ -95,25 +96,19 @@ void moveBackward(){
 
 //Function to turn right
 void turnRight(){
-  digitalWrite(rightBlink, HIGH);
-  delay(400);
-  digitalWrite(rightBlink, LOW);
-  delay(400);
-  digitalWrite(rightBlink, HIGH);
-  delay(400);
-  digitalWrite(rightBlink, LOW);
-  delay(400);
-  digitalWrite(rightBlink, HIGH);
-  delay(400);
-  digitalWrite(rightBlink, LOW);
-
+  for (int i = 0; i <= 2; i++) {
+    digitalWrite(rightLed, HIGH);
+    delay(500);
+    digitalWrite(rightLed, LOW);
+    delay(500);
+  }
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightBackward, HIGH);
 
   digitalWrite(leftBackward, LOW);
   digitalWrite(rightForward, LOW);
 
-  delay(1000);
+  delay(500);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -124,17 +119,12 @@ void turnRight(){
 
 //Function to turn left
 void turnLeft(){
-  digitalWrite(leftBlink, HIGH);
-  delay(400);
-  digitalWrite(leftBlink, LOW);
-  delay(400);
-  digitalWrite(leftBlink, HIGH);
-  delay(400);
-  digitalWrite(leftBlink, LOW);
-  delay(400);
-  digitalWrite(leftBlink, HIGH);
-  delay(400);
-  digitalWrite(leftBlink, LOW);
+  for (int i = 0; i <= 2; i++) {
+    digitalWrite(leftLed, HIGH);
+    delay(500);
+    digitalWrite(leftLed, LOW);
+    delay(500);
+  }
 
   digitalWrite(leftBackward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -142,7 +132,7 @@ void turnLeft(){
   digitalWrite(leftForward, LOW);
   digitalWrite(rightBackward, LOW);
 
-  delay(1000);
+  delay(500);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -161,56 +151,71 @@ void setup(){
   pinMode(rightBackward, OUTPUT);
   pinMode(leftForward, OUTPUT);
   pinMode(leftBackward, OUTPUT);
-  pinMode(rightBlink, OUTPUT);
-  pinMode(leftBlink, OUTPUT);
 
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
   
   myservo.write(90);
   delay(2000);
+
   distance = readPing();
   delay(100);
+
   distance = readPing();
   delay(100);
+
   distance = readPing();
   delay(100);
+
   distance = readPing();
   delay(100);
+
   delay(4000);
-  Serial.println("Setup done");
    
   
 }
 
-void loop(){
-
+void loop()
+{
   int distanceRight = 0;
   int distanceLeft = 0;
   delay(50);
-  if (distance <= stop_distance){
+
+  if (distance <= 20){
     moveStop();
     delay(300);
+
     moveBackward();
     delay(400);
-    moveStop();
-    delay(500);
-    distanceRight = lookRight();
-    delay(500);
-    distanceLeft = lookLeft();
-    delay(500);
 
-    if (distanceRight >= distanceLeft){
+    moveStop();
+    delay(300);
+
+    distanceRight = lookRight();
+    delay(300);
+
+    distanceLeft = lookLeft();
+    delay(300);
+
+    if (distance >= distanceLeft){
       turnRight();
       moveStop();
     }
-    else{
+    else
+    {
       turnLeft();
       moveStop();
     }
   }
-  else{
-    moveForward(); 
+  else
+  {
+    moveForward();
   }
-    distance = readPing();
+  distance = 0;
+  for (int i = 0; i <= 4; i++) {
+    distance += readPing();
+    delay(30);
+  }
+  distance = distance / 5;
+  
 }
