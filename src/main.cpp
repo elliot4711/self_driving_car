@@ -212,10 +212,10 @@ void loop()
     moveForward();
   }
   distance = 0;
-  for (int i = 0; i <= 4; i++) {
+  for (int i = 0; i <= 2; i++) {
     distance += readPing();
     delay(30);
   }
-  distance = distance / 5;
+  distance = distance / 3;
   
 }
