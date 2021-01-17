@@ -48,8 +48,12 @@ int readPing(){
 int lookRight(){ 
   myservo.write(10);
   delay(500);
-  int distance = readPing();
-  delay(100);
+  for (int i = 0; i <= 2; i++) {
+    distance += readPing();
+    delay(5);
+  }
+  distance = distance / 3;
+  delay(200);
   myservo.write(90);
   return distance;
 }
@@ -58,8 +62,12 @@ int lookRight(){
 int lookLeft(){
   myservo.write(170);
   delay(500);
-  int distance = readPing();
-  delay(100);
+  for (int i = 0; i <= 2; i++) {
+    distance += readPing();
+    delay(5);
+  }
+  distance = distance / 3;
+  delay(200);
   myservo.write(90);
   return distance;
   delay(100);
