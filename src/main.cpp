@@ -119,7 +119,7 @@ void turnRight(){
   digitalWrite(leftBackward, LOW);
   digitalWrite(rightForward, LOW);
 
-  delay(1000);
+  delay(1500);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
@@ -143,7 +143,7 @@ void turnLeft(){
   digitalWrite(leftForward, LOW);
   digitalWrite(rightBackward, LOW);
 
-  delay(1000);
+  delay(1500);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(rightForward, HIGH);
